@@ -1,0 +1,34 @@
+{
+  "welcome": "Welcome to the Spotify Artist Listing App",
+  "search": {
+    "placeholder": "Search by name, artist, or album",
+    "button": "Search"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page"
+  },
+  "artist": {
+    "details": "Artist Details",
+    "topTracks": "Top Tracks",
+    "albums": "Albums"
+  },
+  "favorites": {
+    "title": "Your Favorite Songs",
+    "empty": "You have no favorite songs yet."
+  },
+  "notFound": {
+    "message": "Page not found",
+    "backToHome": "Go back to home"
+  },
+  "form": {
+    "registerFavorite": "Register your favorite song",
+    "songName": "Song Name",
+    "artistName": "Artist Name",
+    "submit": "Submit"
+  },
+  "language": {
+    "switch": "Switch to Portuguese"
+  }
+}

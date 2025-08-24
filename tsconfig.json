@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "baseUrl": "src",
+    "paths": {
+      "@hooks/*": ["shared/hooks/*"],
+      "@services/*": ["shared/services/*"],
+      "@contexts/*": ["shared/reducer/contexts/*"],
+      "@components/*": ["shared/components/*"],
+      "@pages/*": ["shared/pages/*"],
+      "@routes/*": ["shared/routes/*"],
+      "@utils/*": ["shared/utils/*"],
+      "@interfaces/*": ["shared/interfaces/*"],
+      "@theme/*": ["shared/theme/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/**/tests/**"
+  ]
+}

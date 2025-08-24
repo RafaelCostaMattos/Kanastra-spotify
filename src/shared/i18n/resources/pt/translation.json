@@ -1,0 +1,29 @@
+{
+  "welcome": "Bem-vindo ao nosso aplicativo de artistas!",
+  "search": "Pesquisar",
+  "filter": "Filtrar",
+  "artist": "Artista",
+  "album": "Álbum",
+  "track": "Faixa",
+  "favorites": "Favoritos",
+  "noResults": "Nenhum resultado encontrado.",
+  "loading": "Carregando...",
+  "error": "Ocorreu um erro. Tente novamente mais tarde.",
+  "pagination": {
+    "previous": "Anterior",
+    "next": "Próximo",
+    "itemsPerPage": "Itens por página"
+  },
+  "details": {
+    "topTracks": "Principais Faixas",
+    "albums": "Álbuns"
+  },
+  "form": {
+    "registerFavorite": "Registrar sua música favorita",
+    "submit": "Enviar"
+  },
+  "language": {
+    "switchToEnglish": "Mudar para inglês",
+    "switchToPortuguese": "Mudar para português"
+  }
+}
