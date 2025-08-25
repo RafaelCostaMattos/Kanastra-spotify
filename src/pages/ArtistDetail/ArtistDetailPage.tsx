@@ -22,6 +22,7 @@ import {
   TablePagination,
 } from '@mui/material';
 import { FaArrowLeft, FaExternalLinkAlt, FaMusic } from 'react-icons/fa';
+import BasicBars from '@components/charts/basicBars';
 
 const msToTime = (ms?: number) => {
   if (ms == null) return '-';
@@ -78,7 +79,6 @@ const ArtistDetailPage: React.FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }} className="space-y-10">
-      {/* Header Artist */}
       <Paper
         elevation={3}
         className="relative overflow-hidden"
@@ -120,7 +120,6 @@ const ArtistDetailPage: React.FC = () => {
         </Stack>
       </Paper>
 
-      {/* Top Tracks */}
       <Stack spacing={2}>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Typography variant="h5" fontWeight={600}>Top Tracks</Typography>
@@ -206,6 +205,8 @@ const ArtistDetailPage: React.FC = () => {
           </Paper>
         )}
       </Stack>
+
+      <BasicBars />
     </Container>
   );
 };
