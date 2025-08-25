@@ -18,7 +18,6 @@ module.exports = {
       '@services': path.resolve(__dirname, 'src/shared/services'),
       '@components': path.resolve(__dirname, 'src/shared/components'),
       '@pages': path.resolve(__dirname, 'src/pages'),
-      '@routes': path.resolve(__dirname, 'src/shared/routes'),
       '@utils': path.resolve(__dirname, 'src/shared/utils'),
       '@interfaces': path.resolve(__dirname, 'src/shared/interfaces'),
       '@theme': path.resolve(__dirname, 'src/shared/theme'),
@@ -27,6 +26,7 @@ module.exports = {
       '@actions': path.resolve(__dirname, 'src/shared/actions'),
       '@queries': path.resolve(__dirname, 'src/shared/queries'),
       '@routes': path.resolve(__dirname, 'src/routes'),
+      '@constants': path.resolve(__dirname, 'src/shared/constants'),
     }
   },
   module: {

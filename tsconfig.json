@@ -16,14 +16,14 @@
       "@contexts/*": ["shared/contexts/*"],
       "@components/*": ["shared/components/*"],
       "@pages/*": ["pages/*"],
-      "@routes/*": ["shared/routes/*"],
       "@utils/*": ["shared/utils/*"],
       "@interfaces/*": ["shared/interfaces/*"],
       "@theme/*": ["shared/theme/*"],
       "@actions/*": ["shared/actions/*"],
       "@reducers/*": ["shared/reducers/*"],
       "@queries/*": ["shared/queries/*"],
-      "@routers/*": ["routes/*"]
+      "@routes/*": ["routes/*"],
+      "@constants/*": ["shared/constants/*"]
     }
   },
   "include": ["src"],

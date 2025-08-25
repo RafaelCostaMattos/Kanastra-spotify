@@ -1,11 +1,8 @@
 import { IArtistFilters } from '@interfaces/artist.interface';
 
-export interface ParsedQuery {
-  query?: string;
-  filters: Partial<IArtistFilters>;
-}
 
-export const parseQueryParams = (search: string): ParsedQuery => {
+
+export const parseQueryParams = (search: string): any => {
   const params = new URLSearchParams(search.startsWith('?') ? search : `?${search}`);
   const query = params.get('artist') || undefined;
   const album = params.get('album') || undefined;
@@ -18,6 +15,6 @@ export const buildQueryParams = (query?: string, filters?: Partial<IArtistFilter
   const params = new URLSearchParams();
   if (query) params.set('artist', query);
   if (filters?.album) params.set('album', String(filters.album));
-  const s = params.toString();
-  return s ? `?${s}` : '';
+  const data = params.toString();
+  return data ? `?${data}` : '';
 };

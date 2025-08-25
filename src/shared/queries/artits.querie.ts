@@ -3,9 +3,9 @@ import {
   fetchSearchArtists,
   fetchArtistDetails,
   fetchArtistTopTracks,
-  fetchRelatedArtists,
   fetchArtists
 } from '@services/artits.service';
+import { IArtist } from '@interfaces/artist.interface';
 
 const qk = {
   initial: (page: number) => ['artists', 'initial', page] as const,
@@ -15,7 +15,6 @@ const qk = {
   related: (id: string) => ['artist', id, 'related'] as const,
 };
 
-// Novo hook: lista inicial (sem termo)
 export function useInitialArtistsQuery(page = 0) {
   return useQuery(
     qk.initial(page),
@@ -28,12 +27,12 @@ export function useArtistsQuery(term: string, page: number, type: 'artist' | 'al
   return useQuery(
     qk.list(term, page, type),
     () => fetchSearchArtists(term, page, 20, type),
-    { keepPreviousData: true, staleTime: 60_000, enabled: enabled && !!term }
+    { keepPreviousData: true, staleTime: 60_000, enabled }
   );
 }
 
 export function useArtistDetailQuery(id?: string) {
-  return useQuery(
+  return useQuery<IArtist>(
     id ? qk.detail(id) : ['artist', 'empty'],
     () => fetchArtistDetails(id!),
     { enabled: !!id, staleTime: 120_000 }
@@ -48,13 +47,6 @@ export function useArtistTopTracksQuery(id?: string, market = 'US') {
   );
 }
 
-export function useRelatedArtistsQuery(id?: string) {
-  return useQuery(
-    id ? qk.related(id) : ['artist', 'related', 'empty'],
-    () => fetchRelatedArtists(id!),
-    { enabled: !!id, staleTime: 300_000 }
-  );
-}
 
 export function usePrefetchArtist() {
   const qc = useQueryClient();

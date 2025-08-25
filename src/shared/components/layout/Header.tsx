@@ -36,7 +36,6 @@ const Header: React.FC = () => {
           Kanastra
         </Typography>
         <Box sx={{ flexGrow: 1 }} />
-        {/* Espaço para futuras ações (ex: campo de busca, tema, login) */}
       </Toolbar>
     </AppBar>
   );
