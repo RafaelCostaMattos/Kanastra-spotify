@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+require('dotenv').config();
 
 module.exports = {
   entry: './src/index.tsx',
@@ -15,13 +16,17 @@ module.exports = {
     alias: {
       '@hooks': path.resolve(__dirname, 'src/shared/hooks'),
       '@services': path.resolve(__dirname, 'src/shared/services'),
-      '@contexts': path.resolve(__dirname, 'src/shared/reducer/contexts'),
       '@components': path.resolve(__dirname, 'src/shared/components'),
-      '@pages': path.resolve(__dirname, 'src/shared/pages'),
+      '@pages': path.resolve(__dirname, 'src/pages'),
       '@routes': path.resolve(__dirname, 'src/shared/routes'),
       '@utils': path.resolve(__dirname, 'src/shared/utils'),
       '@interfaces': path.resolve(__dirname, 'src/shared/interfaces'),
-      '@theme': path.resolve(__dirname, 'src/shared/theme')
+      '@theme': path.resolve(__dirname, 'src/shared/theme'),
+      '@contexts': path.resolve(__dirname, 'src/shared/contexts'),
+      '@reducers': path.resolve(__dirname, 'src/shared/reducers'),
+      '@actions': path.resolve(__dirname, 'src/shared/actions'),
+      '@queries': path.resolve(__dirname, 'src/shared/queries'),
+      '@routes': path.resolve(__dirname, 'src/routes'),
     }
   },
   module: {

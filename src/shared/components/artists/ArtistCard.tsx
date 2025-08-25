@@ -1,19 +1,68 @@
-import { IArtist } from '@interfaces/artist.interface';
 import React from 'react';
+import { Paper, Avatar, Typography, Stack } from '@mui/material';
+import { FaUser } from 'react-icons/fa';
 
-interface ArtistCardProps {
-  artist: IArtist;
-  onClick: () => void;
+interface Props {
+  id: string;
+  name: string;
+  imageUrl?: string;
+  onClick?: (id: string) => void;
+  size?: number;
 }
 
-const ArtistCard: React.FC<ArtistCardProps> = ({ artist, onClick }) => {
+const ArtistCircleCard: React.FC<Props> = ({ id, name, imageUrl, onClick, size = 110 }) => {
+  const handleClick = () => onClick?.(id);
+
   return (
-    <div className="cursor-pointer group rounded-lg border border-gray-200 p-4 bg-white hover:shadow-md transition" onClick={onClick}>
-      <img src={artist.imageUrl} alt={artist.name} className="w-full h-40 object-cover rounded mb-3" />
-      <h3 className="font-semibold text-gray-900 group-hover:text-primary truncate">{artist.name}</h3>
-      <p className="text-xs text-gray-500 mt-1">{artist.genre}</p>
-    </div>
+    <Paper
+      elevation={2}
+      onClick={handleClick}
+      sx={{
+        p: 1.5,
+        cursor: 'pointer',
+        bgcolor: 'background.paper',
+        textAlign: 'center',
+        '&:hover': {
+          bgcolor: 'primary.dark',
+          '& .artist-name': { color: 'primary.light' }
+        },
+        transition: 'background-color .2s'
+      }}
+    >
+      <Stack spacing={1} alignItems="center">
+        <Avatar
+          src={imageUrl || undefined}
+          alt={name}
+          sx={{
+            width: size,
+            height: size,
+            border: '2px solid',
+            borderColor: 'primary.main',
+            bgcolor: imageUrl ? 'transparent' : 'primary.main',
+            fontSize: 0
+          }}
+          variant="circular"
+        >
+          {!imageUrl && <FaUser size={size * 0.5} />}
+        </Avatar>
+        <Typography
+          variant="body2"
+            className="artist-name"
+            fontWeight={500}
+            sx={{
+              width: size + 16,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              color: 'text.primary'
+            }}
+            title={name}
+        >
+          {name}
+        </Typography>
+      </Stack>
+    </Paper>
   );
 };
 
-export default ArtistCard;
+export default ArtistCircleCard;

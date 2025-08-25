@@ -13,13 +13,17 @@
     "paths": {
       "@hooks/*": ["shared/hooks/*"],
       "@services/*": ["shared/services/*"],
-      "@contexts/*": ["shared/reducer/contexts/*"],
+      "@contexts/*": ["shared/contexts/*"],
       "@components/*": ["shared/components/*"],
-      "@pages/*": ["shared/pages/*"],
+      "@pages/*": ["pages/*"],
       "@routes/*": ["shared/routes/*"],
       "@utils/*": ["shared/utils/*"],
       "@interfaces/*": ["shared/interfaces/*"],
-      "@theme/*": ["shared/theme/*"]
+      "@theme/*": ["shared/theme/*"],
+      "@actions/*": ["shared/actions/*"],
+      "@reducers/*": ["shared/reducers/*"],
+      "@queries/*": ["shared/queries/*"],
+      "@routers/*": ["routes/*"]
     }
   },
   "include": ["src"],

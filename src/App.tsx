@@ -1,16 +1,18 @@
 import React from 'react';
-import AppRoutes from './shared/routes';
-import Header from './shared/components/layout/Header';
-import Footer from './shared/components/layout/Footer';
+import AppRoutes from '@routes';
+import Header from '@components/layout/Header';
+import Footer from '@components/layout/Footer';
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import muiTheme from '@theme/muiTheme';
 
 const App: React.FC = () => {
   return (
-    <>
-    <label className='text-lg'>Aqui merda</label>
+    <ThemeProvider theme={muiTheme}>
+      <CssBaseline />
       <Header />
       <AppRoutes />
       <Footer />
-    </>
+    </ThemeProvider>
   );
 };
 

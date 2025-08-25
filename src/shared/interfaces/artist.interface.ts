@@ -22,7 +22,7 @@ export interface IArtistSearchState {
 
 export type IArtistSearchAction =
   | { type: 'SET_QUERY'; payload: string }
-  | { type: 'SET_FILTERS'; payload: Partial<IArtistFilters> }
+  | { type: 'SET_FILTERS'; payload: IArtistFilters }
   | { type: 'RESET_FILTERS' }
   | { type: 'SELECT_ARTIST'; payload?: string };
 

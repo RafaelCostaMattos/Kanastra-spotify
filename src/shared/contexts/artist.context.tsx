@@ -1,10 +1,16 @@
 import { IArtistFilters, IArtistSearchAction, IArtistSearchState } from '@interfaces/artist.interface';
-import { useArtistSearch } from '@hooks/useArtistSearch.hook';
+// import { useArtistSearch } from '@hooks/useArtistSearch.hook';
 import React, { createContext, useReducer, useContext, useMemo, ReactNode, Dispatch, useEffect } from 'react';
 import { buildQueryParams, parseQueryParams } from '@utils/urlFilters';
-import { artistReducer, initialArtistSearchState } from '../reducer/artist.reducer';
+import { artistReducer, initialArtistSearchState } from '@reducers/artist.reducer';
+import { useInitialArtistsQuery, useArtistsQuery } from '@queries/artits.querie';
+import type { IArtist } from '@interfaces/artist.interface';
 
-type ArtistContextValue = IArtistSearchState & ReturnType<typeof useArtistSearch>;
+type ArtistContextValue = IArtistSearchState & {
+  results: IArtist[];
+  loading: boolean;
+  error: unknown;
+};
 
 const ArtistStateCtx = createContext<ArtistContextValue | undefined>(undefined);
 const ArtistDispatchCtx = createContext<Dispatch<IArtistSearchAction> | undefined>(undefined);
@@ -23,8 +29,21 @@ export const ArtistProvider: React.FC<ProviderProps> = ({ children }) => {
   };
 
   const [state, dispatch] = useReducer(artistReducer, undefined, getInitial);
-  const search = useArtistSearch({ query: state.query, filters: state.filters });
-  const value: ArtistContextValue = useMemo(() => ({ ...state, ...search }), [state, search]);
+
+  // Query inicial (lista padrão)
+  const initialQ = useInitialArtistsQuery(0);
+  // Query de busca (ativada somente se query preenchida)
+  const searchQ = useArtistsQuery(state.query, 0, true);
+
+  const isSearching = !!state.query.trim();
+  const results = (isSearching ? searchQ.data?.items : initialQ.data?.items) ?? [];
+  const loading = isSearching ? searchQ.isLoading : initialQ.isLoading;
+  const error = isSearching ? searchQ.error : initialQ.error;
+
+  const value: ArtistContextValue = useMemo(
+    () => ({ ...state, results, loading, error }),
+    [state, results, loading, error]
+  );
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
