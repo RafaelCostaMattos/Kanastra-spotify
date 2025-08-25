@@ -27,6 +27,7 @@ module.exports = {
       '@queries': path.resolve(__dirname, 'src/shared/queries'),
       '@routes': path.resolve(__dirname, 'src/routes'),
       '@constants': path.resolve(__dirname, 'src/shared/constants'),
+      '@i18n': path.resolve(__dirname, 'src/shared/i18n'),
     }
   },
   module: {

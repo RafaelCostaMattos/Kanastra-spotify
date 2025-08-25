@@ -1,9 +1,5 @@
 {
-  "welcome": "Welcome to the Spotify Artist Listing App",
-  "search": {
-    "placeholder": "Search by name, artist, or album",
-    "button": "Search"
-  },
+
   "pagination": {
     "previous": "Previous",
     "next": "Next",
@@ -12,7 +8,18 @@
   "artist": {
     "details": "Artist Details",
     "topTracks": "Top Tracks",
-    "albums": "Albums"
+    "loading": "Loading artist...",
+    "errorLoading": "Error loading artist.",
+    "popularity": "Popularity",
+    "followers": "Followers"
+  },
+  "tracks": {
+    "title": "Top Tracks",
+    "none": "No tracks found.",
+    "loading": "Loading tracks..."
+  },
+  "albums": {
+    "none": "No albums."
   },
   "favorites": {
     "title": "Your Favorite Songs",
@@ -29,6 +36,16 @@
     "submit": "Submit"
   },
   "language": {
-    "switch": "Switch to Portuguese"
+    "switch": "Switch to Portuguese",
+    "current": "English"
+  },
+  "home": {
+    "artists": "Artists",
+    "albums": "Albums",
+    "searchArtists": "Search artists",
+    "searchAlbums": "Search albums",
+    "loading": "Loading...",
+    "noArtists": "No artists.",
+    "noAlbums": "No albums."
   }
 }

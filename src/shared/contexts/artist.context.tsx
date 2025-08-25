@@ -5,6 +5,7 @@ import { buildQueryParams, parseQueryParams } from '@utils/urlFilters';
 import { artistReducer, initialArtistSearchState } from '@reducers/artist.reducer';
 import { useInitialArtistsQuery, useArtistsQuery } from '@queries/artits.querie';
 import type { IArtist } from '@interfaces/artist.interface';
+import i18next from '@i18n/index';
 
 type ArtistContextValue = IArtistSearchState & {
   results: IArtist[];
@@ -61,12 +62,12 @@ export const ArtistProvider: React.FC<ProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const qs = buildQueryParams(state.query, state.filters);
+    const qs = buildQueryParams(state.query, state.filters, i18next.language); // adiciona lang
     const newUrl = `${window.location.pathname}${qs}`;
     if (newUrl !== window.location.pathname + window.location.search) {
       window.history.replaceState(null, '', newUrl);
     }
-  }, [state.query, state.filters]);
+  }, [state.query, state.filters, i18next.language]);
 
   return (
     <ArtistStateCtx.Provider value={value}>

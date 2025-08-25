@@ -1,29 +1,47 @@
 {
-  "welcome": "Bem-vindo ao nosso aplicativo de artistas!",
-  "search": "Pesquisar",
-  "filter": "Filtrar",
-  "artist": "Artista",
+  
+  "artist": {
+    "details": "Detalhes do Artista",
+    "topTracks": "Top Músicas",
+    "loading": "Carregando artista...",
+    "errorLoading": "Erro ao carregar artista.",
+    "popularity": "Popularidade",
+    "followers": "Seguidores"
+  },
   "album": "Álbum",
   "track": "Faixa",
-  "favorites": "Favoritos",
   "noResults": "Nenhum resultado encontrado.",
   "loading": "Carregando...",
   "error": "Ocorreu um erro. Tente novamente mais tarde.",
-  "pagination": {
-    "previous": "Anterior",
-    "next": "Próximo",
-    "itemsPerPage": "Itens por página"
+  "tracks": {
+    "title": "Top Músicas",
+    "none": "Nenhuma faixa encontrada.",
+    "loading": "Carregando faixas..."
   },
-  "details": {
-    "topTracks": "Principais Faixas",
-    "albums": "Álbuns"
+  "albums": {
+    "none": "Nenhum álbum."
+  },
+  "notFound": {
+    "message": "Página não encontrada",
+    "backToHome": "Voltar para a home"
   },
   "form": {
-    "registerFavorite": "Registrar sua música favorita",
+    "registerFavorite": "Cadastre sua música favorita",
+    "songName": "Nome da Música",
+    "artistName": "Nome do Artista",
     "submit": "Enviar"
   },
   "language": {
-    "switchToEnglish": "Mudar para inglês",
-    "switchToPortuguese": "Mudar para português"
+    "switch": "Mudar para Inglês",
+    "current": "Português"
+  },
+  "home": {
+    "artists": "Artistas",
+    "albums": "Álbuns",
+    "searchArtists": "Buscar artistas",
+    "searchAlbums": "Buscar álbuns",
+    "loading": "Carregando...",
+    "noArtists": "Nenhum artista.",
+    "noAlbums": "Nenhum álbum."
   }
 }

@@ -23,7 +23,8 @@
       "@reducers/*": ["shared/reducers/*"],
       "@queries/*": ["shared/queries/*"],
       "@routes/*": ["routes/*"],
-      "@constants/*": ["shared/constants/*"]
+      "@constants/*": ["shared/constants/*"],
+      "@i18n/*": ["shared/i18n/*"]
     }
   },
   "include": ["src"],

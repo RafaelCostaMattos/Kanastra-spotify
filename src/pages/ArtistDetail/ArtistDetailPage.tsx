@@ -23,18 +23,13 @@ import {
 } from '@mui/material';
 import { FaArrowLeft, FaExternalLinkAlt, FaMusic } from 'react-icons/fa';
 import BasicBars from '@components/charts/basicBars';
-
-const msToTime = (ms?: number) => {
-  if (ms == null) return '-';
-  const m = Math.floor(ms / 60000);
-  const s = Math.floor((ms % 60000) / 1000);
-  return `${m}:${s.toString().padStart(2, '0')}`;
-};
+import { useTranslation } from 'react-i18next';
 
 const ArtistDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { data: artist, isLoading: loadingArtist, error: errorArtist } = useArtistDetailQuery(id);
   const { data: topTracksData, isLoading: loadingTracks, error: errorTracks } = useArtistTopTracksQuery(id, 'US');
+  const { t, i18n } = useTranslation();
 
   const tracks = topTracksData?.tracks ?? [];
 
@@ -63,7 +58,7 @@ const ArtistDetailPage: React.FC = () => {
       <Container maxWidth="lg" sx={{ py: 6, display: 'flex', justifyContent: 'center' }}>
         <Stack alignItems="center" gap={2}>
           <CircularProgress size={32} />
-          <Typography variant="body2" color="text.secondary">Carregando artista...</Typography>
+          <Typography variant="body2" color="text.secondary">{t('artist.loading')}</Typography>
         </Stack>
       </Container>
     );
@@ -72,7 +67,7 @@ const ArtistDetailPage: React.FC = () => {
   if (errorArtist) {
     return (
       <Container maxWidth="lg" sx={{ py: 6 }}>
-        <Typography color="error">Erro ao carregar artista.</Typography>
+        <Typography color="error">{t('artist.errorLoading')}</Typography>
       </Container>
     );
   }
@@ -102,14 +97,13 @@ const ArtistDetailPage: React.FC = () => {
               {artist?.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Popularidade: {artist?.popularity ?? '-'} &nbsp;•&nbsp; Seguidores:{' '}
-              {artist?.followers?.total?.toLocaleString?.() ?? '-'}
+              {t('artist.popularity')}: {artist?.popularity ?? '-'} &nbsp;•&nbsp; {t('artist.followers')}: {artist?.followers?.total?.toLocaleString?.() ?? '-'}
             </Typography>
           </Stack>
           <Stack direction="row" alignItems="center" gap={1} ml="auto">
             <IconButton
               component={RouterLink}
-              to="/"
+              to={`/${window.location.search || `?lang=${i18n.language}`}`} // preserva lang
               color="primary"
               size="small"
               sx={{ bgcolor: 'rgba(255,255,255,0.05)' }}
@@ -122,13 +116,13 @@ const ArtistDetailPage: React.FC = () => {
 
       <Stack spacing={2}>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <Typography variant="h5" fontWeight={600}>Top Tracks</Typography>
+          <Typography variant="h5" fontWeight={600}>{t('tracks.title')}</Typography>
           {loadingTracks && <CircularProgress size={18} />}
         </Stack>
         <Divider flexItem sx={{ opacity: 0.15 }} />
         {!loadingTracks && !errorTracks && tracks.length === 0 && (
           <Typography variant="body2" color="text.secondary">
-            Nenhuma faixa encontrada.
+            {t('tracks.none')}
           </Typography>
         )}
         {!loadingTracks && !errorTracks && tracks.length > 0 && (

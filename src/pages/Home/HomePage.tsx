@@ -5,11 +5,13 @@ import { Container, Box, TextField, CircularProgress, Typography, Grid, Paper, C
 import { TablePagination } from '@mui/material';
 import ArtistCircleCard from '@components/artists/ArtistCard';
 import { ITEMS_PER_PAGE } from '@constants/config.constant';
+import { useTranslation } from 'react-i18next';
 
 const HomeInner: React.FC = () => {
   const { results, loading, error, query, searchType, page, totalPages, total } = useArtistState() as any;
   const { setQuery, setSearchType, setPage } = useArtistActions() as any;
   const history = useHistory();
+  const { t, i18n } = useTranslation();
 
   const handleChangeType = (type: 'artist' | 'album') => {
     setSearchType(type);
@@ -19,33 +21,31 @@ const HomeInner: React.FC = () => {
     setPage(newPage);
   };
 
-
-
   return (
     <Container sx={{ py: 4 }}>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
         <Typography variant="h5" fontWeight={600}>
-          {searchType === 'artist' ? 'Artistas' : 'Álbuns'}
+          {searchType === 'artist' ? t('home.artists') : t('home.albums')}
         </Typography>
       </Stack>
       <Stack direction="row" spacing={2} alignItems="center" mb={3} flexWrap="wrap">
         <TextField
           size="small"
-          label={`Buscar ${searchType === 'artist' ? 'artistas' : 'álbuns'}`}
+          label={searchType === 'artist' ? t('home.searchArtists') : t('home.searchAlbums')}
           value={query}
           onChange={e => setQuery(e.target.value)}
           sx={{ width: 320 }}
         />
         <Stack direction="row" spacing={1}>
           <Chip
-            label="Artistas"
+            label={t('home.artists') }
             color={searchType === 'artist' ? 'primary' : 'default'}
             variant={searchType === 'artist' ? 'filled' : 'outlined'}
             onClick={() => handleChangeType('artist')}
             size="medium"
           />
           <Chip
-            label="Álbuns"
+            label={t('home.albums')}
             color={searchType === 'album' ? 'primary' : 'default'}
             variant={searchType === 'album' ? 'filled' : 'outlined'}
             onClick={() => handleChangeType('album')}
@@ -55,13 +55,13 @@ const HomeInner: React.FC = () => {
       </Stack>
       {loading && (
         <Box display="flex" alignItems="center" gap={1} mb={2}>
-          <CircularProgress size={20} /> <Typography variant="body2">Carregando...</Typography>
+          <CircularProgress size={20} /> <Typography variant="body2">{t('home.loading')}</Typography>
         </Box>
       )}
       {error && <Typography color="error" variant="body2" mb={2}>Erro ao buscar resultados</Typography>}
       {!loading && !error && results.length === 0 && (
         <Typography variant="body2" color="text.secondary">
-          {searchType === 'artist' ? 'Nenhum artista.' : 'Nenhum álbum.'}
+          {searchType === 'artist' ? t('home.noArtists') : t('home.noAlbums')}
         </Typography>
       )}
       <Grid container spacing={2}>
@@ -76,9 +76,10 @@ const HomeInner: React.FC = () => {
                 id={a.id}
                 name={a.name}
                 imageUrl={image}
-                onClick={(id) =>
-                  history.push(`/${searchType === 'artist' ? 'artist' : 'album'}/${id}`)
-                }
+                onClick={(id) => {
+                  const langQs = `?lang=${i18n.language}`;
+                  history.push(`/${searchType === 'artist' ? 'artist' : 'album'}/${id}${langQs}`);
+                }}
               />
             </Grid>
           );
