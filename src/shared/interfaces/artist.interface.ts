@@ -18,11 +18,13 @@ export interface IArtistSearchState {
   query: string;
   filters: IArtistFilters;
   selectedArtistId?: string;
+  searchType: 'artist' | 'album'
 }
 
 export type IArtistSearchAction =
   | { type: 'SET_QUERY'; payload: string }
   | { type: 'SET_FILTERS'; payload: IArtistFilters }
   | { type: 'RESET_FILTERS' }
-  | { type: 'SELECT_ARTIST'; payload?: string };
+  | { type: 'SELECT_ARTIST'; payload?: string }
+  | { type: 'SET_SEARCH_TYPE'; payload?: 'artist' | 'album' };
 

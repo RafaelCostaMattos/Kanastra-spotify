@@ -9,7 +9,7 @@ import {
 
 const qk = {
   initial: (page: number) => ['artists', 'initial', page] as const,
-  list: (term: string, page: number) => ['artists', 'search', term || '_', page] as const,
+  list: (term: string, page: number, type: string) => ['artists', 'search', type, term || '_', page] as const,
   detail: (id: string) => ['artist', id] as const,
   top: (id: string) => ['artist', id, 'top'] as const,
   related: (id: string) => ['artist', id, 'related'] as const,
@@ -24,10 +24,10 @@ export function useInitialArtistsQuery(page = 0) {
   );
 }
 
-export function useArtistsQuery(term: string, page: number, enabled = true) {
+export function useArtistsQuery(term: string, page: number, type: 'artist' | 'album', enabled = true) {
   return useQuery(
-    qk.list(term, page),
-    () => fetchSearchArtists(term, page),
+    qk.list(term, page, type),
+    () => fetchSearchArtists(term, page, 20, type),
     { keepPreviousData: true, staleTime: 60_000, enabled: enabled && !!term }
   );
 }

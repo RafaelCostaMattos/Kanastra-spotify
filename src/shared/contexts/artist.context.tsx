@@ -33,7 +33,7 @@ export const ArtistProvider: React.FC<ProviderProps> = ({ children }) => {
   // Query inicial (lista padrão)
   const initialQ = useInitialArtistsQuery(0);
   // Query de busca (ativada somente se query preenchida)
-  const searchQ = useArtistsQuery(state.query, 0, true);
+  const searchQ = useArtistsQuery(state.query, 0, 'artist');
 
   const isSearching = !!state.query.trim();
   const results = (isSearching ? searchQ.data?.items : initialQ.data?.items) ?? [];
@@ -76,9 +76,10 @@ export const useArtistDispatch = () => {
 export const useArtistActions = () => {
   const dispatch = useArtistDispatch();
   return {
-    setQuery: (q: string) => dispatch({ type: 'SET_QUERY', payload: q }),
-    setFilters: (f: Partial<IArtistFilters>) => dispatch({ type: 'SET_FILTERS', payload: f }),
+    setQuery: (data: string) => dispatch({ type: 'SET_QUERY', payload: data }),
+    setFilters: (data: Partial<IArtistFilters>) => dispatch({ type: 'SET_FILTERS', payload: data }),
     resetFilters: () => dispatch({ type: 'RESET_FILTERS' }),
-    selectArtist: (id?: string) => dispatch({ type: 'SELECT_ARTIST', payload: id }),
+    selectArtist: (data?: string) => dispatch({ type: 'SELECT_ARTIST', payload: data }),
+    setSearchType: (data: 'artist' | 'album') => dispatch({ type: 'SET_SEARCH_TYPE', payload: data })
   };
 };

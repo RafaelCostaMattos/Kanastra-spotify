@@ -18,9 +18,7 @@ if (container) {
     <React.StrictMode>
       <QueryClientProvider client={qc}>
       <BrowserRouter>
-        <ArtistProvider>
           <App />
-        </ArtistProvider>
       </BrowserRouter>
       </QueryClientProvider>
     </React.StrictMode>

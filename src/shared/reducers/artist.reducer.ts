@@ -2,7 +2,8 @@ import { IArtistSearchAction, IArtistSearchState } from "@interfaces/artist.inte
 
 const initialArtistSearchState: IArtistSearchState = {
     query: '',
-    filters: {}
+    filters: {},
+    searchType: 'artist'
 };
 
 const artistReducer = (state = initialArtistSearchState, action: IArtistSearchAction): IArtistSearchState => {
@@ -15,6 +16,8 @@ const artistReducer = (state = initialArtistSearchState, action: IArtistSearchAc
       return { ...state, filters: {} };
     case 'SELECT_ARTIST':
       return { ...state, selectedArtistId: action.payload };
+    case 'SET_SEARCH_TYPE':
+      return { ...state, searchType: action.payload as 'artist' | 'album' };
     default:
       return state;
   }
