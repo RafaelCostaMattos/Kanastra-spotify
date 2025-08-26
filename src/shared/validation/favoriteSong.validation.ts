@@ -13,5 +13,4 @@ export const FavoriteSongFormSchema = FavoriteSongSchema.omit({
   createdAt: true,
 });
 
-export type FavoriteSong = z.infer<typeof FavoriteSongSchema>;
 export type FavoriteSongFormValues = z.infer<typeof FavoriteSongFormSchema>;

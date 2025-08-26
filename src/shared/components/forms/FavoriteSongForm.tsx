@@ -1,11 +1,11 @@
+import { IFavoriteSong } from '@interfaces/favorite.interface';
 import { Button, Paper, Stack, TextField, Typography } from '@mui/material';
-import { FavoriteSongFormValues } from '@validation/favoriteSong.validation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
 interface Props {
-  onAdd: (data: FavoriteSongFormValues) => void;
-  initialValues?: FavoriteSongFormValues;
+  onAdd: (id: string) => void;
+  initialValues?: IFavoriteSong;
   onClose?: () => void;
 }
 
@@ -15,6 +15,7 @@ const FavoriteSongForm: React.FC<Props> = ({
   onClose,
 }) => {
   const computedDefaults = {
+    id: initialValues?.id ?? '',
     title: initialValues?.title ?? '',
     artist: initialValues?.artist ?? '',
     album: initialValues?.album ?? '',
@@ -25,7 +26,7 @@ const FavoriteSongForm: React.FC<Props> = ({
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<FavoriteSongFormValues>({
+  } = useForm<IFavoriteSong>({
     defaultValues: computedDefaults,
   });
 
@@ -35,10 +36,10 @@ const FavoriteSongForm: React.FC<Props> = ({
     }
   }, [initialValues, reset]);
 
-  const onSubmit = (data: FavoriteSongFormValues) => {
-    onAdd(data);
+  const onSubmit = () => {
+    onAdd(computedDefaults.id);
     if (onClose) onClose();
-    reset({ title: '', artist: '', album: '' });
+    reset({ id: '', title: '', artist: '', album: '' });
   };
 
   return (

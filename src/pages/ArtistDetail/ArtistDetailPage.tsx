@@ -1,5 +1,6 @@
 import BasicBars from '@components/charts/BasicaChart';
 import FavoriteSongForm from '@components/forms/FavoriteSongForm';
+import { ITEMS_PER_PAGE_DETAIL } from '@constants/config.constant';
 import { useFavoriteSongs } from '@hooks/useFavoriteSongs.hook';
 import {
   Avatar,
@@ -26,26 +27,30 @@ import {
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaArrowLeft, FaHeart, FaMusic, FaRegHeart } from 'react-icons/fa';
-import { Link as RouterLink, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 const ArtistDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const history = useHistory();
+
   const {
     data: artist,
     isLoading: loadingArtist,
     error: errorArtist,
   } = useArtistDetailQuery(id);
+
   const {
     data: topTracksData,
     isLoading: loadingTracks,
     error: errorTracks,
   } = useArtistTopTracksQuery(id, 'US');
-  const { t, i18n } = useTranslation();
+
+  const { t } = useTranslation();
 
   const tracks = topTracksData?.tracks ?? [];
 
   const [tracksPage, setTracksPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(ITEMS_PER_PAGE_DETAIL);
 
   React.useEffect(() => {
     setTracksPage(0);
@@ -60,18 +65,17 @@ const ArtistDetailPage: React.FC = () => {
     setTracksPage(newPage);
   };
 
-  const { addFavorite, songs, isFavorite, toggleFavorite } = useFavoriteSongs();
+  const { addFavorite, isFavorite, toggleFavorite } = useFavoriteSongs();
 
   const [openFavorite, setOpenFavorite] = React.useState(false);
   const [selectedTrack, setSelectedTrack] = React.useState<any | null>(null);
 
   const openFormForTrack = (track: any) => {
     setSelectedTrack({
+      id: track.id,
       title: track.name,
       artist: artist?.name || '',
       album: track.album?.name || '',
-      url: track.external_urls?.spotify || '',
-      rating: 5,
     });
     setOpenFavorite(true);
   };
@@ -107,6 +111,18 @@ const ArtistDetailPage: React.FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }} className="space-y-10">
+      <Stack direction="row" alignItems="center" gap={1} ml="auto">
+        <IconButton
+          onClick={() => history.goBack()}
+          color="primary"
+          size="small"
+          className="p-2 hover:transparent transition-transform duration-150 ease-in-out rounded-md"
+        >
+          <Stack direction="row" alignItems="center" gap={1} ml="auto">
+            <FaArrowLeft />
+          </Stack>
+        </IconButton>
+      </Stack>
       <Paper
         elevation={3}
         className="relative overflow-hidden"
@@ -143,17 +159,6 @@ const ArtistDetailPage: React.FC = () => {
               &nbsp;•&nbsp; {t('artist.followers')}:{' '}
               {artist?.followers?.total?.toLocaleString?.() ?? '-'}
             </Typography>
-          </Stack>
-          <Stack direction="row" alignItems="center" gap={1} ml="auto">
-            <IconButton
-              component={RouterLink}
-              to={`/${window.location.search || `?lang=${i18n.language}`}`}
-              color="primary"
-              size="small"
-              sx={{ bgcolor: 'rgba(255,255,255,0.05)' }}
-            >
-              <FaArrowLeft />
-            </IconButton>
           </Stack>
         </Stack>
       </Paper>
@@ -196,7 +201,7 @@ const ArtistDetailPage: React.FC = () => {
                 </TableHead>
                 <TableBody>
                   {paginatedTracks.map((data: any, idx: number) => {
-                    const fav = isFavorite(data.name, artist?.name || '');
+                    const fav = isFavorite(data.id);
                     return (
                       <TableRow
                         key={data.id}
@@ -241,14 +246,10 @@ const ArtistDetailPage: React.FC = () => {
                         <TableCell>
                           <IconButton
                             size="small"
-                            color={fav ? 'error' : 'default'}
+                            color={fav ? 'success' : 'default'}
                             onClick={() => {
                               if (fav) {
-                                toggleFavorite(
-                                  data.name,
-                                  artist?.name || '',
-                                  data.album?.name,
-                                );
+                                toggleFavorite(data.id);
                               } else {
                                 openFormForTrack(data);
                               }

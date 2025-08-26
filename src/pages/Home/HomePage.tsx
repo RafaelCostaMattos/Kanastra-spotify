@@ -1,5 +1,5 @@
 import ArtistCircleCard from '@components/artists/ArtistCard';
-import { ITEMS_PER_PAGE } from '@constants/config.constant';
+import { ITEMS_PER_PAGE_HOME } from '@constants/config.constant';
 import {
   ArtistProvider,
   useArtistActions,
@@ -57,8 +57,9 @@ const HomeInner: React.FC = () => {
         </Typography>
       </Stack>
       <Stack
+        flex={0}
         direction="row"
-        spacing={2}
+        spacing={1}
         alignItems="center"
         mb={3}
         flexWrap="wrap"
@@ -72,24 +73,22 @@ const HomeInner: React.FC = () => {
           }
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          sx={{ width: 320 }}
+          sx={{ maxWidth: 320 }}
         />
-        <Stack direction="row" spacing={1}>
-          <Chip
-            label={t('home.artists')}
-            color={searchType === 'artist' ? 'primary' : 'default'}
-            variant={searchType === 'artist' ? 'filled' : 'outlined'}
-            onClick={() => handleChangeType('artist')}
-            size="medium"
-          />
-          <Chip
-            label={t('home.albums')}
-            color={searchType === 'album' ? 'primary' : 'default'}
-            variant={searchType === 'album' ? 'filled' : 'outlined'}
-            onClick={() => handleChangeType('album')}
-            size="medium"
-          />
-        </Stack>
+        <Chip
+          label={t('home.artists')}
+          color={searchType === 'artist' ? 'primary' : 'default'}
+          variant={searchType === 'artist' ? 'filled' : 'outlined'}
+          onClick={() => handleChangeType('artist')}
+          size="medium"
+        />
+        <Chip
+          label={t('home.albums')}
+          color={searchType === 'album' ? 'primary' : 'default'}
+          variant={searchType === 'album' ? 'filled' : 'outlined'}
+          onClick={() => handleChangeType('album')}
+          size="medium"
+        />
       </Stack>
       {loading && (
         <Box display="flex" alignItems="center" gap={1} mb={2}>
@@ -135,14 +134,14 @@ const HomeInner: React.FC = () => {
         })}
       </Grid>
 
-      {total && (
+      {total > 0 && (
         <Box mt={3} display="flex" justifyContent="center">
           <Paper variant="outlined" sx={{ bgcolor: 'rgba(255,255,255,0.02)' }}>
             <TablePagination
               component="div"
               page={page}
               count={total}
-              rowsPerPage={ITEMS_PER_PAGE}
+              rowsPerPage={ITEMS_PER_PAGE_HOME}
               onPageChange={handleChangePage}
               rowsPerPageOptions={[]}
               sx={{

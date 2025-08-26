@@ -1,43 +1,31 @@
-import {
-  IArtistSearchAction,
-  IArtistSearchState,
-} from '@interfaces/artist.interface';
+import { EArtistAction } from '@enums/artist.enum';
+import { IArtistSearchState } from '@interfaces/artist.interface';
 
-const initialArtistSearchState: IArtistSearchState = {
+export const initialArtistSearchState: IArtistSearchState = {
   query: '',
   filters: {},
   searchType: 'artist',
   page: 0,
 };
 
-const artistReducer = (
-  state = initialArtistSearchState,
-  action: IArtistSearchAction,
-): IArtistSearchState => {
+export function artistReducer(
+  state: IArtistSearchState,
+  action: any,
+): IArtistSearchState {
   switch (action.type) {
-    case 'SET_QUERY':
+    case EArtistAction.SetQuery:
       return { ...state, query: action.payload, page: 0 };
-    case 'SET_FILTERS':
-      return {
-        ...state,
-        filters: { ...state.filters, ...action.payload },
-        page: 0,
-      };
-    case 'RESET_FILTERS':
+    case EArtistAction.SetFilters:
+      return { ...state, filters: action.payload, page: 0 };
+    case EArtistAction.ResetFilters:
       return { ...state, filters: {}, page: 0 };
-    case 'SELECT_ARTIST':
+    case EArtistAction.SelectArtist:
       return { ...state, selectedArtistId: action.payload };
-    case 'SET_SEARCH_TYPE':
-      return {
-        ...state,
-        searchType: action.payload as 'artist' | 'album',
-        page: 0,
-      };
-    case 'SET_PAGE':
+    case EArtistAction.SetSearchType:
+      return { ...state, searchType: action.payload, page: 0, query: '' };
+    case EArtistAction.SetPage:
       return { ...state, page: action.payload };
     default:
       return state;
   }
-};
-
-export { artistReducer, initialArtistSearchState };
+}

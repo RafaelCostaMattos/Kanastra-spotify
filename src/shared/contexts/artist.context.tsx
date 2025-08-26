@@ -4,6 +4,7 @@ import {
   IArtistSearchState,
 } from '@interfaces/artist.interface';
 // import { useArtistSearch } from '@hooks/useArtistSearch.hook';
+import { EArtistAction } from '@enums/artist.enum';
 import i18next from '@i18n/index';
 import type { IArtist } from '@interfaces/artist.interface';
 import {
@@ -44,7 +45,6 @@ interface ProviderProps {
 
 export const ArtistProvider: React.FC<ProviderProps> = ({ children }) => {
   const getInitial = (): IArtistSearchState => {
-    if (typeof window === 'undefined') return initialArtistSearchState;
     const parsed = parseQueryParams(window.location.search);
     return {
       ...initialArtistSearchState,
@@ -60,20 +60,20 @@ export const ArtistProvider: React.FC<ProviderProps> = ({ children }) => {
   const isSearching = !!state.query.trim();
   const page = state.page ?? 0;
 
-  const initialQ = useInitialArtistsQuery(
+  const initialQuery = useInitialArtistsQuery(
     isSearching || state.searchType !== 'artist' ? 0 : page,
   );
 
   const enableSearch = state.searchType === 'album' || isSearching;
 
-  const searchQ = useArtistsQuery(
+  const searchQuery = useArtistsQuery(
     state.query,
     page,
     state.searchType,
     enableSearch,
   );
 
-  const activeQuery = enableSearch ? searchQ : initialQ;
+  const activeQuery = enableSearch ? searchQuery : initialQuery;
 
   const results = activeQuery?.data?.items ?? [];
   const loading = activeQuery?.isLoading ?? false;
@@ -88,7 +88,6 @@ export const ArtistProvider: React.FC<ProviderProps> = ({ children }) => {
   );
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
     const qs = buildQueryParams(state.query, state.filters, i18next.language);
     const newUrl = `${window.location.pathname}${qs}`;
     if (newUrl !== window.location.pathname + window.location.search) {
@@ -122,14 +121,13 @@ export const useArtistDispatch = () => {
 export const useArtistActions = () => {
   const dispatch = useArtistDispatch();
   return {
-    setQuery: (data: string) => dispatch({ type: 'SET_QUERY', payload: data }),
+    setQuery: (data: string) =>
+      dispatch({ type: EArtistAction.SetQuery, payload: data }),
     setFilters: (data: IArtistFilters) =>
-      dispatch({ type: 'SET_FILTERS', payload: data }),
-    resetFilters: () => dispatch({ type: 'RESET_FILTERS' }),
-    selectArtist: (data?: string) =>
-      dispatch({ type: 'SELECT_ARTIST', payload: data }),
+      dispatch({ type: EArtistAction.SetFilters, payload: data }),
     setSearchType: (data: 'artist' | 'album') =>
-      dispatch({ type: 'SET_SEARCH_TYPE', payload: data }),
-    setPage: (p: number) => dispatch({ type: 'SET_PAGE', payload: p }),
+      dispatch({ type: EArtistAction.SetSearchType, payload: data }),
+    setPage: (data: number) =>
+      dispatch({ type: EArtistAction.SetPage, payload: data }),
   };
 };

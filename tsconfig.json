@@ -25,7 +25,8 @@
       "@routes/*": ["routes/*"],
       "@constants/*": ["shared/constants/*"],
       "@i18n/*": ["shared/i18n/*"],
-      "@validation/*": ["shared/validation/*"]
+      "@validation/*": ["shared/validation/*"],
+      "@enums/*": ["shared/enums/*"]
     }
   },
   "include": ["src"],
