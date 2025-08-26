@@ -6,12 +6,14 @@ const muiTheme = createTheme({
     primary: { main: '#1DB954' },
     background: {
       default: '#121212',
-      paper: '#1e1e1e'
-    }
+      paper: '#1e1e1e',
+    },
   },
   typography: {
-    fontFamily: ['Inter', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(',')
-  }
+    fontFamily: ['Inter', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(
+      ',',
+    ),
+  },
 });
 
 export default muiTheme;

@@ -50,15 +50,14 @@ const ArtistDetailPage: React.FC = () => {
   const tracks = topTracksData?.tracks ?? [];
 
   const [tracksPage, setTracksPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(ITEMS_PER_PAGE_DETAIL);
 
   React.useEffect(() => {
     setTracksPage(0);
-  }, [tracks.length, rowsPerPage]);
+  }, [tracks.length]);
 
   const paginatedTracks = tracks.slice(
-    tracksPage * rowsPerPage,
-    tracksPage * rowsPerPage + rowsPerPage,
+    tracksPage * ITEMS_PER_PAGE_DETAIL,
+    tracksPage * ITEMS_PER_PAGE_DETAIL + ITEMS_PER_PAGE_DETAIL,
   );
 
   const handleChangeTracksPage = (_: unknown, newPage: number) => {
@@ -213,7 +212,7 @@ const ArtistDetailPage: React.FC = () => {
                         }}
                       >
                         <TableCell sx={{ opacity: 0.6 }}>
-                          {tracksPage * rowsPerPage + idx + 1}
+                          {tracksPage * ITEMS_PER_PAGE_DETAIL + idx + 1}
                         </TableCell>
                         <TableCell>
                           <Stack
@@ -272,9 +271,9 @@ const ArtistDetailPage: React.FC = () => {
               component="div"
               page={tracksPage}
               count={tracks.length}
-              rowsPerPage={rowsPerPage}
+              ITEMS_PER_PAGE_DETAIL={ITEMS_PER_PAGE_DETAIL}
               onPageChange={handleChangeTracksPage}
-              rowsPerPageOptions={[]}
+              ITEMS_PER_PAGE_DETAILOptions={[]}
               sx={{
                 bgcolor: 'rgba(255,255,255,0.02)',
                 borderTop: '1px solid rgba(255,255,255,0.08)',

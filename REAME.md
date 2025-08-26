@@ -56,4 +56,3 @@ A aplicação deve abrir em: http://localhost:3000
 - `src/shared/contexts` – Contexto .
 - `src/pages` – Páginas.
 - `src/shared/components` – Componentes reutilizáveis.
-

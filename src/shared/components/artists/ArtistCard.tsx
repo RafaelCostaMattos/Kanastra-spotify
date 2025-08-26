@@ -10,7 +10,13 @@ interface Props {
   size?: number;
 }
 
-const ArtistCircleCard: React.FC<Props> = ({ id, name, imageUrl, onClick, size = 110 }) => {
+const ArtistCircleCard: React.FC<Props> = ({
+  id,
+  name,
+  imageUrl,
+  onClick,
+  size = 110,
+}) => {
   const handleClick = () => onClick?.(id);
 
   return (
@@ -24,9 +30,9 @@ const ArtistCircleCard: React.FC<Props> = ({ id, name, imageUrl, onClick, size =
         textAlign: 'center',
         '&:hover': {
           bgcolor: 'primary.dark',
-          '& .artist-name': { color: 'primary.light' }
+          '& .artist-name': { color: 'primary.light' },
         },
-        transition: 'background-color .2s'
+        transition: 'background-color .2s',
       }}
     >
       <Stack spacing={1} alignItems="center">
@@ -39,7 +45,7 @@ const ArtistCircleCard: React.FC<Props> = ({ id, name, imageUrl, onClick, size =
             border: '2px solid',
             borderColor: 'primary.main',
             bgcolor: imageUrl ? 'transparent' : 'primary.main',
-            fontSize: 0
+            fontSize: 0,
           }}
           variant="circular"
         >
@@ -47,16 +53,16 @@ const ArtistCircleCard: React.FC<Props> = ({ id, name, imageUrl, onClick, size =
         </Avatar>
         <Typography
           variant="body2"
-            className="artist-name"
-            fontWeight={500}
-            sx={{
-              width: size + 16,
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              color: 'text.primary'
-            }}
-            title={name}
+          className="artist-name"
+          fontWeight={500}
+          sx={{
+            width: size + 16,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            color: 'text.primary',
+          }}
+          title={name}
         >
           {name}
         </Typography>

@@ -16,14 +16,19 @@ const Header: React.FC = () => {
   const homeWithLang = `/?lang=${i18n.language}`;
 
   return (
-    <AppBar position="static" color="default" elevation={1} sx={{ backgroundColor: '#121212', borderBottom: '1px solid #222' }}>
+    <AppBar
+      position="static"
+      color="default"
+      elevation={1}
+      sx={{ backgroundColor: '#121212', borderBottom: '1px solid #222' }}
+    >
       <Toolbar>
         <IconButton
-            edge="start"
-            component={Link}
-            to={homeWithLang}
-            aria-label="Inicio"
-            sx={{ mr: 1, color: '#1DB954' }}
+          edge="start"
+          component={Link}
+          to={homeWithLang}
+          aria-label="Inicio"
+          sx={{ mr: 1, color: '#1DB954' }}
         >
           <FaSpotify size={28} />
         </IconButton>
@@ -36,7 +41,7 @@ const Header: React.FC = () => {
             color: 'white',
             fontWeight: 600,
             letterSpacing: '.5px',
-            '&:hover': { color: '#1DB954' }
+            '&:hover': { color: '#1DB954' },
           }}
         >
           Kanastra
@@ -50,7 +55,10 @@ const Header: React.FC = () => {
             textTransform: 'none',
             borderColor: '#1DB954',
             color: '#1DB954',
-            '&:hover': { borderColor: '#1DB954', background: 'rgba(29,185,84,0.1)' }
+            '&:hover': {
+              borderColor: '#1DB954',
+              background: 'rgba(29,185,84,0.1)',
+            },
           }}
         >
           {t('language.switch')}

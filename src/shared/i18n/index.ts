@@ -6,6 +6,9 @@ import {
   SUPPORTED_LANGUAGES,
 } from 'shared/constants/config.constant';
 
+import en from './resources/en/translation.json';
+import pt from './resources/pt/translation.json';
+
 const stored =
   (typeof window !== 'undefined' &&
     localStorage.getItem(LANGUAGE_STORAGE_KEY)) ||
@@ -27,12 +30,8 @@ const initial =
     : DEFAULT_LANGUAGE;
 
 const resources = {
-  en: {
-    translation: require('./resources/en/translation.json'),
-  },
-  pt: {
-    translation: require('./resources/pt/translation.json'),
-  },
+  pt: { translation: pt },
+  en: { translation: en },
 };
 
 i18next.use(initReactI18next).init({

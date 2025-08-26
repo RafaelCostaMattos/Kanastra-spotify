@@ -10,6 +10,7 @@
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
     "baseUrl": "src",
+    "resolveJsonModule": true,
     "paths": {
       "@hooks/*": ["shared/hooks/*"],
       "@services/*": ["shared/services/*"],
@@ -30,9 +31,5 @@
     }
   },
   "include": ["src"],
-  "exclude": [
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx",
-    "src/**/tests/**"
-  ]
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/tests/**"]
 }

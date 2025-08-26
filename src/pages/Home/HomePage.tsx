@@ -22,16 +22,8 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
 const HomeInner: React.FC = () => {
-  const {
-    results,
-    loading,
-    error,
-    query,
-    searchType,
-    page,
-    totalPages,
-    total,
-  } = useArtistState() as any;
+  const { results, loading, error, query, searchType, page, total } =
+    useArtistState() as any;
   const { setQuery, setSearchType, setPage } = useArtistActions() as any;
   const history = useHistory();
   const { t, i18n } = useTranslation();
