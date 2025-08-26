@@ -52,8 +52,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.SPOTIFY_API_TOKEN': JSON.stringify(process.env.SPOTIFY_API_TOKEN || ''),
-      'process.env.SPOTIFY_CLIENT_SECRET': JSON.stringify(process.env.SPOTIFY_CLIENT_SECRET || ''),
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+      'process.env.SPOTIFY_CLIENT_SECRET': JSON.stringify(process.env.SPOTIFY_CLIENT_SECRET || '')
     })
   ],
   devServer: {
