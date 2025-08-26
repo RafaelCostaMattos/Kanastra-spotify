@@ -28,6 +28,7 @@ module.exports = {
       '@routes': path.resolve(__dirname, 'src/routes'),
       '@constants': path.resolve(__dirname, 'src/shared/constants'),
       '@i18n': path.resolve(__dirname, 'src/shared/i18n'),
+      '@validation': path.resolve(__dirname, 'src/shared/validation')
     }
   },
   module: {

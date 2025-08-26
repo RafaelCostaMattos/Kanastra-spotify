@@ -1,8 +1,8 @@
-import React from 'react';
-import AppRoutes from '@routes';
 import Header from '@components/layout/Header';
-import { ThemeProvider, CssBaseline } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import AppRoutes from '@routes/index';
 import muiTheme from '@theme/muiTheme';
+import React from 'react';
 
 const App: React.FC = () => {
   return (

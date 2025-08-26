@@ -1,13 +1,12 @@
 export interface IArtist {
-    id: string;
-    name: string;
-    genre: string;
-    imageUrl: string;
-    topTracks: string[];
-    albums: string[];
-    bio: string
+  id: string;
+  name: string;
+  genre: string;
+  imageUrl: string;
+  topTracks: string[];
+  albums: string[];
+  bio: string;
 }
-
 
 export interface IArtistFilters {
   album?: string;
@@ -19,7 +18,7 @@ export interface IArtistSearchState {
   filters: IArtistFilters;
   selectedArtistId?: string;
   searchType: 'artist' | 'album';
-  page?: number; 
+  page?: number;
 }
 
 export type IArtistSearchAction =
@@ -30,20 +29,19 @@ export type IArtistSearchAction =
   | { type: 'SET_SEARCH_TYPE'; payload: 'artist' | 'album' }
   | { type: 'SET_PAGE'; payload: number };
 
+export interface ISpotifyImage {
+  url: string;
+  width?: number;
+  height?: number;
+}
 
-  export interface ISpotifyImage {
-    url: string;
-    width?: number;
-    height?: number;
-  }
-  
-  export interface IArtist {
-    id: string;
-    name: string;
-    genres: string[];
-    images: ISpotifyImage[];
-    popularity: number;
-    followers?: { total: number };
-    external_urls?: { spotify?: string };
-    type: 'artist';
-  }
+export interface IArtist {
+  id: string;
+  name: string;
+  genres: string[];
+  images: ISpotifyImage[];
+  popularity: number;
+  followers?: { total: number };
+  external_urls?: { spotify?: string };
+  type: 'artist';
+}

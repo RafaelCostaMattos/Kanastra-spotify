@@ -1,8 +1,7 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import HomePage from '../pages/Home/HomePage';
 import ArtistDetailPage from 'pages/ArtistDetail/ArtistDetailPage';
 import NotFoundPage from 'pages/NotFound/NotFoundPage';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import HomePage from '../pages/Home/HomePage';
 
 const routes = () => {
   return (

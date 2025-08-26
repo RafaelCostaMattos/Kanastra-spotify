@@ -24,7 +24,8 @@
       "@queries/*": ["shared/queries/*"],
       "@routes/*": ["routes/*"],
       "@constants/*": ["shared/constants/*"],
-      "@i18n/*": ["shared/i18n/*"]
+      "@i18n/*": ["shared/i18n/*"],
+      "@validation/*": ["shared/validation/*"]
     }
   },
   "include": ["src"],

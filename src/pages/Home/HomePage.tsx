@@ -1,14 +1,37 @@
-import React, { useEffect } from 'react';
-import { ArtistProvider, useArtistState, useArtistActions } from '@contexts/artist.context';
-import { useHistory } from 'react-router-dom';
-import { Container, Box, TextField, CircularProgress, Typography, Grid, Paper, Chip, Stack } from '@mui/material';
-import { TablePagination } from '@mui/material';
 import ArtistCircleCard from '@components/artists/ArtistCard';
 import { ITEMS_PER_PAGE } from '@constants/config.constant';
+import {
+  ArtistProvider,
+  useArtistActions,
+  useArtistState,
+} from '@contexts/artist.context';
+import {
+  Box,
+  Chip,
+  CircularProgress,
+  Container,
+  Grid,
+  Paper,
+  Stack,
+  TablePagination,
+  TextField,
+  Typography,
+} from '@mui/material';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 const HomeInner: React.FC = () => {
-  const { results, loading, error, query, searchType, page, totalPages, total } = useArtistState() as any;
+  const {
+    results,
+    loading,
+    error,
+    query,
+    searchType,
+    page,
+    totalPages,
+    total,
+  } = useArtistState() as any;
   const { setQuery, setSearchType, setPage } = useArtistActions() as any;
   const history = useHistory();
   const { t, i18n } = useTranslation();
@@ -23,22 +46,37 @@ const HomeInner: React.FC = () => {
 
   return (
     <Container sx={{ py: 4 }}>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        mb={2}
+      >
         <Typography variant="h5" fontWeight={600}>
           {searchType === 'artist' ? t('home.artists') : t('home.albums')}
         </Typography>
       </Stack>
-      <Stack direction="row" spacing={2} alignItems="center" mb={3} flexWrap="wrap">
+      <Stack
+        direction="row"
+        spacing={2}
+        alignItems="center"
+        mb={3}
+        flexWrap="wrap"
+      >
         <TextField
           size="small"
-          label={searchType === 'artist' ? t('home.searchArtists') : t('home.searchAlbums')}
+          label={
+            searchType === 'artist'
+              ? t('home.searchArtists')
+              : t('home.searchAlbums')
+          }
           value={query}
-          onChange={e => setQuery(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
           sx={{ width: 320 }}
         />
         <Stack direction="row" spacing={1}>
           <Chip
-            label={t('home.artists') }
+            label={t('home.artists')}
             color={searchType === 'artist' ? 'primary' : 'default'}
             variant={searchType === 'artist' ? 'filled' : 'outlined'}
             onClick={() => handleChangeType('artist')}
@@ -55,10 +93,15 @@ const HomeInner: React.FC = () => {
       </Stack>
       {loading && (
         <Box display="flex" alignItems="center" gap={1} mb={2}>
-          <CircularProgress size={20} /> <Typography variant="body2">{t('home.loading')}</Typography>
+          <CircularProgress size={20} />{' '}
+          <Typography variant="body2">{t('home.loading')}</Typography>
         </Box>
       )}
-      {error && <Typography color="error" variant="body2" mb={2}>Erro ao buscar resultados</Typography>}
+      {error && (
+        <Typography color="error" variant="body2" mb={2}>
+          Erro ao buscar resultados
+        </Typography>
+      )}
       {!loading && !error && results.length === 0 && (
         <Typography variant="body2" color="text.secondary">
           {searchType === 'artist' ? t('home.noArtists') : t('home.noAlbums')}
@@ -69,7 +112,9 @@ const HomeInner: React.FC = () => {
           const image =
             a.imageUrl ||
             a.images?.[0]?.url ||
-            (Array.isArray(a.images) && a.images.length > 0 ? a.images[0].url : undefined);
+            (Array.isArray(a.images) && a.images.length > 0
+              ? a.images[0].url
+              : undefined);
           return (
             <Grid item xs={6} sm={4} md={3} lg={2} key={a.id}>
               <ArtistCircleCard
@@ -78,7 +123,11 @@ const HomeInner: React.FC = () => {
                 imageUrl={image}
                 onClick={(id) => {
                   const langQs = `?lang=${i18n.language}`;
-                  history.push(`/${searchType === 'artist' ? 'artist' : 'album'}/${id}${langQs}`);
+                  history.push(
+                    `/${
+                      searchType === 'artist' ? 'artist' : 'album'
+                    }/${id}${langQs}`,
+                  );
                 }}
               />
             </Grid>
@@ -86,7 +135,7 @@ const HomeInner: React.FC = () => {
         })}
       </Grid>
 
-      {total  && (
+      {total && (
         <Box mt={3} display="flex" justifyContent="center">
           <Paper variant="outlined" sx={{ bgcolor: 'rgba(255,255,255,0.02)' }}>
             <TablePagination
@@ -98,7 +147,7 @@ const HomeInner: React.FC = () => {
               rowsPerPageOptions={[]}
               sx={{
                 bgcolor: 'rgba(255,255,255,0.02)',
-                borderTop: '1px solid rgba(255,255,255,0.08)'
+                borderTop: '1px solid rgba(255,255,255,0.08)',
               }}
             />
           </Paper>

@@ -1,34 +1,45 @@
-import React from 'react';
-import { useParams, Link as RouterLink } from 'react-router-dom';
-import { useArtistDetailQuery, useArtistTopTracksQuery } from '@queries/artits.querie';
+import BasicBars from '@components/charts/BasicaChart';
+import FavoriteSongForm from '@components/forms/FavoriteSongForm';
+import { useFavoriteSongs } from '@hooks/useFavoriteSongs.hook';
 import {
-  Container,
-  Stack,
-  Typography,
   Avatar,
-  Chip,
   Box,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
+  CircularProgress,
+  Container,
+  Dialog,
+  Divider,
   IconButton,
   Paper,
-  Grid,
-  CircularProgress,
-  Tooltip,
-  Divider,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
   TablePagination,
+  TableRow,
+  Typography,
 } from '@mui/material';
-import { FaArrowLeft, FaExternalLinkAlt, FaMusic } from 'react-icons/fa';
-import BasicBars from '@components/charts/basicBars';
+import {
+  useArtistDetailQuery,
+  useArtistTopTracksQuery,
+} from '@queries/artits.querie';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaArrowLeft, FaHeart, FaMusic, FaRegHeart } from 'react-icons/fa';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 
 const ArtistDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { data: artist, isLoading: loadingArtist, error: errorArtist } = useArtistDetailQuery(id);
-  const { data: topTracksData, isLoading: loadingTracks, error: errorTracks } = useArtistTopTracksQuery(id, 'US');
+  const {
+    data: artist,
+    isLoading: loadingArtist,
+    error: errorArtist,
+  } = useArtistDetailQuery(id);
+  const {
+    data: topTracksData,
+    isLoading: loadingTracks,
+    error: errorTracks,
+  } = useArtistTopTracksQuery(id, 'US');
   const { t, i18n } = useTranslation();
 
   const tracks = topTracksData?.tracks ?? [];
@@ -42,23 +53,45 @@ const ArtistDetailPage: React.FC = () => {
 
   const paginatedTracks = tracks.slice(
     tracksPage * rowsPerPage,
-    tracksPage * rowsPerPage + rowsPerPage
+    tracksPage * rowsPerPage + rowsPerPage,
   );
 
   const handleChangeTracksPage = (_: unknown, newPage: number) => {
     setTracksPage(newPage);
   };
-  const handleChangeRowsPerPage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(e.target.value, 10));
-    setTracksPage(0);
+
+  const { addFavorite, songs, isFavorite, toggleFavorite } = useFavoriteSongs();
+
+  const [openFavorite, setOpenFavorite] = React.useState(false);
+  const [selectedTrack, setSelectedTrack] = React.useState<any | null>(null);
+
+  const openFormForTrack = (track: any) => {
+    setSelectedTrack({
+      title: track.name,
+      artist: artist?.name || '',
+      album: track.album?.name || '',
+      url: track.external_urls?.spotify || '',
+      rating: 5,
+    });
+    setOpenFavorite(true);
+  };
+
+  const closeDialog = () => {
+    setOpenFavorite(false);
+    setSelectedTrack(null);
   };
 
   if (loadingArtist) {
     return (
-      <Container maxWidth="lg" sx={{ py: 6, display: 'flex', justifyContent: 'center' }}>
+      <Container
+        maxWidth="lg"
+        sx={{ py: 6, display: 'flex', justifyContent: 'center' }}
+      >
         <Stack alignItems="center" gap={2}>
           <CircularProgress size={32} />
-          <Typography variant="body2" color="text.secondary">{t('artist.loading')}</Typography>
+          <Typography variant="body2" color="text.secondary">
+            {t('artist.loading')}
+          </Typography>
         </Stack>
       </Container>
     );
@@ -79,16 +112,25 @@ const ArtistDetailPage: React.FC = () => {
         className="relative overflow-hidden"
         sx={{
           p: { xs: 3, md: 4 },
-          background:
-            'linear-gradient(135deg, rgba(29,185,84,0.15) 0%, rgba(25,25,25,0.9) 60%)',
-          backdropFilter: 'blur(4px)'
+          backdropFilter: 'blur(4px)',
         }}
       >
-        <Stack direction="row" spacing={3} alignItems="flex-end" flexWrap="wrap">
+        <Stack
+          direction="row"
+          spacing={3}
+          alignItems="flex-end"
+          flexWrap="wrap"
+        >
           <Avatar
             src={artist?.images?.[0]?.url}
             variant="rounded"
-            sx={{ width: 160, height: 160, borderRadius: 3, boxShadow: 3, bgcolor: '#1DB954' }}
+            sx={{
+              width: 160,
+              height: 160,
+              borderRadius: 3,
+              boxShadow: 3,
+              bgcolor: '#1DB954',
+            }}
           >
             <FaMusic size={48} />
           </Avatar>
@@ -97,13 +139,15 @@ const ArtistDetailPage: React.FC = () => {
               {artist?.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {t('artist.popularity')}: {artist?.popularity ?? '-'} &nbsp;•&nbsp; {t('artist.followers')}: {artist?.followers?.total?.toLocaleString?.() ?? '-'}
+              {t('artist.popularity')}: {artist?.popularity ?? '-'}{' '}
+              &nbsp;•&nbsp; {t('artist.followers')}:{' '}
+              {artist?.followers?.total?.toLocaleString?.() ?? '-'}
             </Typography>
           </Stack>
           <Stack direction="row" alignItems="center" gap={1} ml="auto">
             <IconButton
               component={RouterLink}
-              to={`/${window.location.search || `?lang=${i18n.language}`}`} // preserva lang
+              to={`/${window.location.search || `?lang=${i18n.language}`}`}
               color="primary"
               size="small"
               sx={{ bgcolor: 'rgba(255,255,255,0.05)' }}
@@ -115,8 +159,14 @@ const ArtistDetailPage: React.FC = () => {
       </Paper>
 
       <Stack spacing={2}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <Typography variant="h5" fontWeight={600}>{t('tracks.title')}</Typography>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Typography variant="h5" fontWeight={600}>
+            {t('tracks.title')}
+          </Typography>
           {loadingTracks && <CircularProgress size={18} />}
         </Stack>
         <Divider flexItem sx={{ opacity: 0.15 }} />
@@ -131,7 +181,7 @@ const ArtistDetailPage: React.FC = () => {
             sx={{
               overflow: 'hidden',
               borderColor: 'rgba(255,255,255,0.08)',
-              background: 'linear-gradient(180deg,#181818,#121212)'
+              background: 'linear-gradient(180deg,#181818,#121212)',
             }}
           >
             <Box sx={{ overflowX: 'auto' }}>
@@ -141,46 +191,79 @@ const ArtistDetailPage: React.FC = () => {
                     <TableCell sx={{ width: 40, fontWeight: 600 }}>#</TableCell>
                     <TableCell sx={{ fontWeight: 600 }}>Título</TableCell>
                     <TableCell sx={{ fontWeight: 600 }}>Álbum</TableCell>
+                    <TableCell sx={{ width: 70, fontWeight: 600 }} />{' '}
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {paginatedTracks.map((t: any, idx: number) => (
-                    <TableRow
-                      key={t.id}
-                      hover
-                      sx={{
-                        '&:nth-of-type(odd)': { backgroundColor: 'rgba(255,255,255,0.02)' }
-                      }}
-                    >
-                      <TableCell sx={{ opacity: 0.6 }}>
-                        {tracksPage * rowsPerPage + idx + 1}
-                      </TableCell>
-                      <TableCell>
-                        <Stack direction="row" spacing={1} alignItems="center">
-                          {t.album?.images?.[2]?.url && (
-                            <Avatar
-                              src={t.album.images[2].url}
-                              variant="rounded"
-                              sx={{ width: 40, height: 40, borderRadius: 1 }}
-                            />
-                          )}
-                          <Typography variant="body2" noWrap maxWidth={240}>
-                            {t.name}
+                  {paginatedTracks.map((data: any, idx: number) => {
+                    const fav = isFavorite(data.name, artist?.name || '');
+                    return (
+                      <TableRow
+                        key={data.id}
+                        hover
+                        sx={{
+                          '&:nth-of-type(odd)': {
+                            backgroundColor: 'rgba(255,255,255,0.02)',
+                          },
+                        }}
+                      >
+                        <TableCell sx={{ opacity: 0.6 }}>
+                          {tracksPage * rowsPerPage + idx + 1}
+                        </TableCell>
+                        <TableCell>
+                          <Stack
+                            direction="row"
+                            spacing={1}
+                            alignItems="center"
+                          >
+                            {data.album?.images?.[2]?.url && (
+                              <Avatar
+                                src={data.album.images[2].url}
+                                variant="rounded"
+                                sx={{ width: 40, height: 40, borderRadius: 1 }}
+                              />
+                            )}
+                            <Typography variant="body2" noWrap maxWidth={240}>
+                              {data.name}
+                            </Typography>
+                          </Stack>
+                        </TableCell>
+                        <TableCell sx={{ maxWidth: 180 }}>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            noWrap
+                            title={data.album?.name}
+                          >
+                            {data.album?.name}
                           </Typography>
-                        </Stack>
-                      </TableCell>
-                      <TableCell sx={{ maxWidth: 180 }}>
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          noWrap
-                          title={t.album?.name}
-                        >
-                          {t.album?.name}
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                        </TableCell>
+                        <TableCell>
+                          <IconButton
+                            size="small"
+                            color={fav ? 'error' : 'default'}
+                            onClick={() => {
+                              if (fav) {
+                                toggleFavorite(
+                                  data.name,
+                                  artist?.name || '',
+                                  data.album?.name,
+                                );
+                              } else {
+                                openFormForTrack(data);
+                              }
+                            }}
+                          >
+                            {fav ? (
+                              <FaHeart size={14} />
+                            ) : (
+                              <FaRegHeart size={14} />
+                            )}
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </Box>
@@ -193,7 +276,7 @@ const ArtistDetailPage: React.FC = () => {
               rowsPerPageOptions={[]}
               sx={{
                 bgcolor: 'rgba(255,255,255,0.02)',
-                borderTop: '1px solid rgba(255,255,255,0.08)'
+                borderTop: '1px solid rgba(255,255,255,0.08)',
               }}
             />
           </Paper>
@@ -201,6 +284,14 @@ const ArtistDetailPage: React.FC = () => {
       </Stack>
 
       <BasicBars />
+
+      <Dialog open={openFavorite} onClose={closeDialog} fullWidth>
+        <FavoriteSongForm
+          onAdd={addFavorite}
+          initialValues={selectedTrack || undefined}
+          onClose={closeDialog}
+        />
+      </Dialog>
     </Container>
   );
 };
