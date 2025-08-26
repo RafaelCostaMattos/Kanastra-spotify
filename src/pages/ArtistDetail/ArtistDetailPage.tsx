@@ -196,7 +196,7 @@ const ArtistDetailPage: React.FC = () => {
                       {t('artist.title')}
                     </TableCell>
                     <TableCell sx={{ fontWeight: 600 }}>{t('album')}</TableCell>
-                    <TableCell sx={{ width: 70, fontWeight: 600 }} />{' '}
+                    <TableCell sx={{ width: 70, fontWeight: 600 }} />
                   </TableRow>
                 </TableHead>
                 <TableBody>

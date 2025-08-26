@@ -35,7 +35,6 @@ module.exports = [
       'no-console': ['warn', { allow: ['error'] }],
     },
   },
-  // Override para arquivos de configuração Node (usa require, module, __dirname, process)
   {
     files: [
       'eslint.config.cjs',
