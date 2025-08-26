@@ -2,6 +2,7 @@ import { IFavoriteSong } from '@interfaces/favorite.interface';
 import { Button, Paper, Stack, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   onAdd: (id: string) => void;
@@ -30,6 +31,8 @@ const FavoriteSongForm: React.FC<Props> = ({
     defaultValues: computedDefaults,
   });
 
+  const { t } = useTranslation();
+
   React.useEffect(() => {
     if (initialValues) {
       reset(computedDefaults);
@@ -54,25 +57,25 @@ const FavoriteSongForm: React.FC<Props> = ({
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Stack spacing={2}>
           <Typography variant="h6" fontWeight={600}>
-            Adicionar música favorita
+            {t('form.registerFavorite')}
           </Typography>
           <TextField
             size="small"
-            label="Título"
+            label={t('artist.title')}
             {...register('title')}
             error={!!errors.title}
             helperText={errors.title?.message}
           />
           <TextField
             size="small"
-            label="Artista"
+            label={t('artist.artist')}
             {...register('artist')}
             error={!!errors.artist}
             helperText={errors.artist?.message}
           />
           <TextField
             size="small"
-            label="Álbum (opcional)"
+            label={t('album')}
             {...register('album')}
             error={!!errors.album}
             helperText={errors.album?.message}

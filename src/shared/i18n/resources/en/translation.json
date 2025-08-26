@@ -10,8 +10,12 @@
     "loading": "Loading artist...",
     "errorLoading": "Error loading artist.",
     "popularity": "Popularity",
-    "followers": "Followers"
+    "followers": "Followers",
+    "title": "Title",
+    "artist": "Artist"
   },
+  "album": "Album",
+  "track": "Track",
   "tracks": {
     "title": "Top Tracks",
     "none": "No tracks found.",

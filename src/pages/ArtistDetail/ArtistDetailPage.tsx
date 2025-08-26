@@ -192,9 +192,10 @@ const ArtistDetailPage: React.FC = () => {
               <Table size="small" stickyHeader>
                 <TableHead>
                   <TableRow sx={{ bgcolor: 'rgba(255,255,255,0.04)' }}>
-                    <TableCell sx={{ width: 40, fontWeight: 600 }}>#</TableCell>
-                    <TableCell sx={{ fontWeight: 600 }}>Título</TableCell>
-                    <TableCell sx={{ fontWeight: 600 }}>Álbum</TableCell>
+                    <TableCell sx={{ fontWeight: 600 }}>
+                      {t('artist.title')}
+                    </TableCell>
+                    <TableCell sx={{ fontWeight: 600 }}>{t('album')}</TableCell>
                     <TableCell sx={{ width: 70, fontWeight: 600 }} />{' '}
                   </TableRow>
                 </TableHead>
@@ -211,9 +212,6 @@ const ArtistDetailPage: React.FC = () => {
                           },
                         }}
                       >
-                        <TableCell sx={{ opacity: 0.6 }}>
-                          {tracksPage * ITEMS_PER_PAGE_DETAIL + idx + 1}
-                        </TableCell>
                         <TableCell>
                           <Stack
                             direction="row"
@@ -271,9 +269,9 @@ const ArtistDetailPage: React.FC = () => {
               component="div"
               page={tracksPage}
               count={tracks.length}
-              ITEMS_PER_PAGE_DETAIL={ITEMS_PER_PAGE_DETAIL}
+              rowsPerPage={ITEMS_PER_PAGE_DETAIL}
               onPageChange={handleChangeTracksPage}
-              ITEMS_PER_PAGE_DETAILOptions={[]}
+              rowsPerPageOptions={[]}
               sx={{
                 bgcolor: 'rgba(255,255,255,0.02)',
                 borderTop: '1px solid rgba(255,255,255,0.08)',

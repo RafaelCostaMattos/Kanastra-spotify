@@ -5,7 +5,9 @@
     "loading": "Carregando artista...",
     "errorLoading": "Erro ao carregar artista.",
     "popularity": "Popularidade",
-    "followers": "Seguidores"
+    "followers": "Seguidores",
+    "title": "Título",
+    "artist": "Artista"
   },
   "album": "Álbum",
   "track": "Faixa",
@@ -25,7 +27,7 @@
     "backToHome": "Voltar para a home"
   },
   "form": {
-    "registerFavorite": "Cadastre sua música favorita",
+    "registerFavorite": "Adicionar música favorita",
     "songName": "Nome da Música",
     "artistName": "Nome do Artista",
     "submit": "Enviar"
